@@ -18,7 +18,6 @@ public class Sol {
 	private Sensor atmosphericTemperature;
 	private Sensor atmosphericPressure;
 	private Sensor horizontalWindSpeed;
-	private Compass windDirection;
 
 	public enum Season {
 		WINTER, SPRING, SUMMER, FALL;
@@ -92,11 +91,4 @@ public class Sol {
 		this.horizontalWindSpeed = horizontalWindSpeed;
 	}
 
-	public Compass getWindDirection() {
-		return windDirection;
-	}
-
-	public void setWindDirection(Compass windDirection) {
-		this.windDirection = windDirection;
-	}
 }
