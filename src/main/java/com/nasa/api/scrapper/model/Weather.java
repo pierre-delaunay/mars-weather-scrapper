@@ -19,20 +19,32 @@ public class Weather {
 		this.setSolKeys(solKeys);
 	}
 
-	public List<Integer> getSolKeys() {
-		return solKeys;
-	}
-
-	public void setSolKeys(List<Integer> solKeys) {
-		this.solKeys = solKeys;
-	}
-
+	/**
+	 * @return the sols
+	 */
 	public Map<Integer, Sol> getSols() {
 		return sols;
 	}
 
+	/**
+	 * @param sols the sols to set
+	 */
 	public void setSols(Map<Integer, Sol> sols) {
 		this.sols = sols;
+	}
+
+	/**
+	 * @return the solKeys
+	 */
+	public List<Integer> getSolKeys() {
+		return solKeys;
+	}
+
+	/**
+	 * @param solKeys the solKeys to set
+	 */
+	public void setSolKeys(List<Integer> solKeys) {
+		this.solKeys = solKeys;
 	}
 
 	@Override

@@ -4,20 +4,51 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Sol Model
  * 
  * @author Pierre
  *
  */
+@Entity
+@Table(name = "sol")
 public class Sol {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Basic
+	@Column(name = "solKey")
 	private int key;
+
+	@Enumerated(EnumType.STRING)
 	private Season season;
+
+	@Transient
 	private Instant firstUTC;
+
+	@Transient
 	private Instant lastUTC;
+
+	@Transient
 	private Sensor atmosphericTemperature;
+
+	@Transient
 	private Sensor atmosphericPressure;
+
+	@Transient
 	private Sensor horizontalWindSpeed;
 
 	public enum Season {
@@ -48,58 +79,114 @@ public class Sol {
 		this.horizontalWindSpeed = horizontalWindSpeed;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the key
+	 */
 	public int getKey() {
 		return key;
 	}
 
+	/**
+	 * @param key the key to set
+	 */
 	public void setKey(int key) {
 		this.key = key;
 	}
 
+	/**
+	 * @return the season
+	 */
 	public Season getSeason() {
 		return season;
 	}
 
+	/**
+	 * @param season the season to set
+	 */
 	public void setSeason(Season season) {
 		this.season = season;
 	}
 
+	/**
+	 * @return the firstUTC
+	 */
 	public Instant getFirstUTC() {
 		return firstUTC;
 	}
 
+	/**
+	 * @param firstUTC the firstUTC to set
+	 */
 	public void setFirstUTC(Instant firstUTC) {
 		this.firstUTC = firstUTC;
 	}
 
+	/**
+	 * @return the lastUTC
+	 */
 	public Instant getLastUTC() {
 		return lastUTC;
 	}
 
+	/**
+	 * @param lastUTC the lastUTC to set
+	 */
 	public void setLastUTC(Instant lastUTC) {
 		this.lastUTC = lastUTC;
 	}
 
+	/**
+	 * @return the atmosphericTemperature
+	 */
 	public Sensor getAtmosphericTemperature() {
 		return atmosphericTemperature;
 	}
 
+	/**
+	 * @param atmosphericTemperature the atmosphericTemperature to set
+	 */
 	public void setAtmosphericTemperature(Sensor atmosphericTemperature) {
 		this.atmosphericTemperature = atmosphericTemperature;
 	}
 
+	/**
+	 * @return the atmosphericPressure
+	 */
 	public Sensor getAtmosphericPressure() {
 		return atmosphericPressure;
 	}
 
+	/**
+	 * @param atmosphericPressure the atmosphericPressure to set
+	 */
 	public void setAtmosphericPressure(Sensor atmosphericPressure) {
 		this.atmosphericPressure = atmosphericPressure;
 	}
 
+	/**
+	 * @return the horizontalWindSpeed
+	 */
 	public Sensor getHorizontalWindSpeed() {
 		return horizontalWindSpeed;
 	}
 
+	/**
+	 * @param horizontalWindSpeed the horizontalWindSpeed to set
+	 */
 	public void setHorizontalWindSpeed(Sensor horizontalWindSpeed) {
 		this.horizontalWindSpeed = horizontalWindSpeed;
 	}

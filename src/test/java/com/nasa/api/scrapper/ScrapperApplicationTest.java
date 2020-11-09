@@ -3,6 +3,7 @@ package com.nasa.api.scrapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,14 @@ class ScrapperApplicationTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ScrapperApplicationTest.class);
 
 	@Autowired
-	private Environment env;
+	private Environment environment;
+
+	private ResponseEntity<String> response;
+
+	@BeforeEach
+	void setUp() {
+		this.response = getRestTemplate().getForEntity(environment.getProperty("api.url"), String.class);
+	}
 
 	@Bean
 	public RestTemplate getRestTemplate() {
@@ -39,21 +47,17 @@ class ScrapperApplicationTest {
 
 	@Test
 	void getResponseFromApi() {
-		ResponseEntity<String> response = getRestTemplate().getForEntity(env.getProperty("api.url"), String.class);
-		assertNotNull(response.getBody());
+		assertNotNull(this.response.getBody());
 	}
 
 	@Test
 	void getHttpStatusFromApi_returnsHttpStatusOK() {
-		ResponseEntity<String> response = getRestTemplate().getForEntity(env.getProperty("api.url"), String.class);
-		assertEquals(response.getStatusCode(), HttpStatus.OK);
+		assertEquals(this.response.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
 	void getWeatherDataFromApi_returnsWeatherPojo() {
-		ResponseEntity<String> response = getRestTemplate().getForEntity(env.getProperty("api.url"), String.class);
-
-		Weather weather = Deserializer.gson.fromJson(response.getBody(), Weather.class);
+		Weather weather = Deserializer.gson.fromJson(this.response.getBody(), Weather.class);
 		assertNotNull(weather);
 		assertNotNull(weather.getSolKeys());
 	}

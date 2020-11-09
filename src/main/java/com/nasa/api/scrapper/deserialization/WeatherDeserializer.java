@@ -32,9 +32,9 @@ public class WeatherDeserializer implements JsonDeserializer<Weather> {
 			solKeys.add(element.getAsInt());
 		}
 
-        jsonObject.remove("sol_keys");
-        jsonObject.remove("validity_checks");
-        
+		jsonObject.remove("sol_keys");
+		jsonObject.remove("validity_checks");
+
 		Map<Integer, Sol> solData = new HashMap<>();
 
 		for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {

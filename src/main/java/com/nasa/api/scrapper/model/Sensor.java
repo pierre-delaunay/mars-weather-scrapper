@@ -3,18 +3,42 @@ package com.nasa.api.scrapper.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Sensor Model
  * 
  * @author Pierre
  *
  */
+@Entity
+@Table(name = "sensor")
 public class Sensor {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Enumerated(EnumType.STRING)
 	private MeasurementUnit unit;
+
+	@Column(name = "sampleCount", precision = 3, scale = 0, columnDefinition = "DECIMAL (3)")
 	private int sampleCount;
+
+	@Column(name = "sampleAverage", precision = 10, scale = 0, columnDefinition = "DECIMAL (10)")
 	private Double sampleAverage;
+
+	@Column(name = "sampleMinimum", precision = 10, scale = 0, columnDefinition = "DECIMAL (10)")
 	private Double sampleMinimum;
+
+	@Column(name = "sampleMaximum", precision = 10, scale = 0, columnDefinition = "DECIMAL (10)")
 	private Double sampleMaximum;
 
 	public enum MeasurementUnit {
@@ -53,24 +77,88 @@ public class Sensor {
 		this.sampleMaximum = sampleMaximum;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the unit
+	 */
 	public MeasurementUnit getUnit() {
 		return unit;
 	}
 
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(MeasurementUnit unit) {
+		this.unit = unit;
+	}
+
+	/**
+	 * @return the sampleCount
+	 */
 	public int getSampleCount() {
 		return sampleCount;
 	}
 
+	/**
+	 * @param sampleCount the sampleCount to set
+	 */
+	public void setSampleCount(int sampleCount) {
+		this.sampleCount = sampleCount;
+	}
+
+	/**
+	 * @return the sampleAverage
+	 */
 	public Double getSampleAverage() {
 		return sampleAverage;
 	}
 
+	/**
+	 * @param sampleAverage the sampleAverage to set
+	 */
+	public void setSampleAverage(Double sampleAverage) {
+		this.sampleAverage = sampleAverage;
+	}
+
+	/**
+	 * @return the sampleMinimum
+	 */
 	public Double getSampleMinimum() {
 		return sampleMinimum;
 	}
 
+	/**
+	 * @param sampleMinimum the sampleMinimum to set
+	 */
+	public void setSampleMinimum(Double sampleMinimum) {
+		this.sampleMinimum = sampleMinimum;
+	}
+
+	/**
+	 * @return the sampleMaximum
+	 */
 	public Double getSampleMaximum() {
 		return sampleMaximum;
+	}
+
+	/**
+	 * @param sampleMaximum the sampleMaximum to set
+	 */
+	public void setSampleMaximum(Double sampleMaximum) {
+		this.sampleMaximum = sampleMaximum;
 	}
 
 	@Override
