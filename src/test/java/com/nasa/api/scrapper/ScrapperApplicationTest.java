@@ -27,8 +27,7 @@ import com.nasa.api.scrapper.model.Weather;
 @SpringBootTest
 class ScrapperApplicationTest {
 
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(ScrapperApplicationTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(ScrapperApplicationTest.class);
 
 	@Autowired
 	private Environment environment;
@@ -60,6 +59,9 @@ class ScrapperApplicationTest {
 		Weather weather = Deserializer.gson.fromJson(this.response.getBody(), Weather.class);
 		assertNotNull(weather);
 		assertNotNull(weather.getSolKeys());
+
+		logger.info("forEach using lambda ::");
+		weather.getSols().forEach((k, v) -> logger.info("SolKey : " + k + " | Sol : " + v));
 	}
 
 }

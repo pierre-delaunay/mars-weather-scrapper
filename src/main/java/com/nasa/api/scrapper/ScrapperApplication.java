@@ -2,7 +2,6 @@ package com.nasa.api.scrapper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
 
 import com.nasa.api.scrapper.deserialization.Deserializer;
-import com.nasa.api.scrapper.model.Sol;
 import com.nasa.api.scrapper.model.Weather;
 import com.nasa.api.scrapper.services.SolService;
 
@@ -55,7 +53,7 @@ public class ScrapperApplication {
 	}
 
 	/**
-	 * Runs every five minute.
+	 * Runs every five minutes.
 	 */
 	@Scheduled(fixedRate = 300000, initialDelay = 10000)
 	public void scheduleTaskWithFixedRate() {
@@ -63,11 +61,11 @@ public class ScrapperApplication {
 		Weather weather = getWeatherData();
 
 		logger.info("Scheduled Task :: Printing weather data :: " + weather.toString());
-		List<Integer> solKeys = weather.getSolKeys();
-		Sol firstSol = weather.getSols().get(solKeys.get(0));
 
-		logger.info("Scheduled Task :: createOrUpdate :: Sol " + firstSol.getKey());
-		this.solService.createOrUpdate(firstSol);
+		weather.getSols().forEach((k, v) -> {
+			logger.info("Scheduled Task :: Sol " + k);
+			this.solService.createOrUpdate(v);
+		});
 	}
 
 }
