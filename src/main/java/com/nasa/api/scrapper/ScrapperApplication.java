@@ -62,11 +62,11 @@ public class ScrapperApplication {
 		logger.info("Scheduled Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
 		Weather weather = getWeatherData();
 
-		logger.info("Printing weather data :: " + weather.toString());
+		logger.info("Scheduled Task :: Printing weather data :: " + weather.toString());
 		List<Integer> solKeys = weather.getSolKeys();
 		Sol firstSol = weather.getSols().get(solKeys.get(0));
 
-		logger.info("Scheduled Task :: Storing data in DB");
+		logger.info("Scheduled Task :: createOrUpdate :: Sol " + firstSol.getKey());
 		this.solService.createOrUpdate(firstSol);
 	}
 

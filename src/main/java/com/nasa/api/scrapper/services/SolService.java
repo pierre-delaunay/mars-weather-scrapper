@@ -18,7 +18,7 @@ public interface SolService {
 	/**
 	 * Create or update existing Sol.
 	 * 
-	 * @param sol
+	 * @param Sol
 	 * @return saved Sol
 	 */
 	public Sol createOrUpdate(Sol sol);
@@ -30,4 +30,19 @@ public interface SolService {
 	 */
 	public List<Sol> findAll();
 
+	/**
+	 * Retrieve Sol by its key.
+	 * 
+	 * @param key
+	 * @return Sol
+	 */
+	public Sol findByKey(int key);
+
+	/**
+	 * Returns status over a existing Sol.
+	 * 
+	 * @param key
+	 * @return true if Sol already exists, false otherwise
+	 */
+	public boolean isSolExist(int key);
 }

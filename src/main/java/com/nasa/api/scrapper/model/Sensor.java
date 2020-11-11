@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,10 +27,13 @@ public class Sensor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@OneToOne(mappedBy = "atmosphericTemperature")
+	private Sol sol;
+
 	@Enumerated(EnumType.STRING)
 	private MeasurementUnit unit;
 
-	@Column(name = "sampleCount", precision = 3, scale = 0, columnDefinition = "DECIMAL (3)")
+	@Column(name = "sampleCount", precision = 3, scale = 0, columnDefinition = "DECIMAL (10)")
 	private int sampleCount;
 
 	@Column(name = "sampleAverage", precision = 10, scale = 0, columnDefinition = "DECIMAL (10)")
@@ -68,6 +72,9 @@ public class Sensor {
 
 	}
 
+	public Sensor() {
+	}
+
 	public Sensor(MeasurementUnit unit, int sampleCount, Double sampleAverage, Double sampleMinimum,
 			Double sampleMaximum) {
 		this.unit = unit;
@@ -89,6 +96,20 @@ public class Sensor {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the sol
+	 */
+	public Sol getSol() {
+		return sol;
+	}
+
+	/**
+	 * @param sol the sol to set
+	 */
+	public void setSol(Sol sol) {
+		this.sol = sol;
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package com.nasa.api.scrapper.deserialization;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -28,8 +27,8 @@ public class SolDeserializer implements JsonDeserializer<Sol> {
 		int key = jsonObject.get("key").getAsInt();
 		Season season = Season.fromString(jsonObject.get("Season").getAsString().toUpperCase());
 
-		Instant firstUTC = Instant.parse(jsonObject.get("First_UTC").getAsString());
-		Instant lastUTC = Instant.parse(jsonObject.get("Last_UTC").getAsString());
+		String firstUTC = jsonObject.get("First_UTC").getAsString();
+		String lastUTC = jsonObject.get("Last_UTC").getAsString();
 
 		Sensor atmosphericPressure;
 		Sensor atmosphericTemperature;

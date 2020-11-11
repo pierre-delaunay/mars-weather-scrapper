@@ -19,7 +19,7 @@ import com.nasa.api.scrapper.deserialization.Deserializer;
 import com.nasa.api.scrapper.model.Weather;
 
 /**
- * Scrapper Application Unit Test
+ * Scrapper Application Unit Tests
  * 
  * @author Pierre
  *

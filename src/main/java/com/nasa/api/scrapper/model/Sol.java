@@ -1,10 +1,10 @@
 package com.nasa.api.scrapper.model;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,8 +12,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * Sol Model
@@ -27,6 +28,7 @@ public class Sol {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private long id;
 
 	@Basic
@@ -36,19 +38,20 @@ public class Sol {
 	@Enumerated(EnumType.STRING)
 	private Season season;
 
-	@Transient
-	private Instant firstUTC;
+	private String firstUTC;
 
-	@Transient
-	private Instant lastUTC;
+	private String lastUTC;
 
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "temperature_sensor_id")
 	private Sensor atmosphericTemperature;
 
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pressure_sensor_id")
 	private Sensor atmosphericPressure;
 
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "windspeed_sensor_id")
 	private Sensor horizontalWindSpeed;
 
 	public enum Season {
@@ -67,7 +70,10 @@ public class Sol {
 		}
 	}
 
-	public Sol(int key, Season season, Instant firstUTC, Instant lastUTC, Sensor atmosphericTemperature,
+	public Sol() {
+	}
+
+	public Sol(int key, Season season, String firstUTC, String lastUTC, Sensor atmosphericTemperature,
 			Sensor atmosphericPressure, Sensor horizontalWindSpeed) {
 		super();
 		this.key = key;
@@ -124,28 +130,28 @@ public class Sol {
 	/**
 	 * @return the firstUTC
 	 */
-	public Instant getFirstUTC() {
+	public String getFirstUTC() {
 		return firstUTC;
 	}
 
 	/**
 	 * @param firstUTC the firstUTC to set
 	 */
-	public void setFirstUTC(Instant firstUTC) {
+	public void setFirstUTC(String firstUTC) {
 		this.firstUTC = firstUTC;
 	}
 
 	/**
 	 * @return the lastUTC
 	 */
-	public Instant getLastUTC() {
+	public String getLastUTC() {
 		return lastUTC;
 	}
 
 	/**
 	 * @param lastUTC the lastUTC to set
 	 */
-	public void setLastUTC(Instant lastUTC) {
+	public void setLastUTC(String lastUTC) {
 		this.lastUTC = lastUTC;
 	}
 
