@@ -1,20 +1,15 @@
 package com.nasa.api.scrapper.services;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nasa.api.scrapper.ScrapperApplication;
 import com.nasa.api.scrapper.model.Sol;
+import com.nasa.api.scrapper.repositories.SolRepository;
 
 /**
  * Sol Service Implementation
@@ -22,47 +17,54 @@ import com.nasa.api.scrapper.model.Sol;
  * @author Pierre
  *
  */
-@Service("solServiceImpl")
+@Service
 public class SolServiceImpl implements SolService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private SolRepository solRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(ScrapperApplication.class);
 
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-	@Transactional
 	@Override
-	public Sol createOrUpdate(Sol sol) {
-		if (isSolExist(sol.getKey())) {
-			logger.info("Sol Service :: Storing existing Sol in DB - {}",
-					dateTimeFormatter.format(LocalDateTime.now()));
-			entityManager.merge(sol);
-		} else {
-			logger.info("Sol Service :: Storing new Sol in DB - {}", dateTimeFormatter.format(LocalDateTime.now()));
-			entityManager.persist(sol);
+	public Sol save(Sol sol) {
+		if (!this.solRepository.existsByKey(sol.getKey())) {
+			logger.info("SolRepository :: Saving new Sol :: Key = " + sol.getKey());
+			return this.solRepository.save(sol);
 		}
+		logger.info("SolRepository :: Sol already exists :: Key = " + sol.getKey());
 		return sol;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Sol> findAll() {
-		Query query = entityManager.createQuery("from Sol");
-		return (List<Sol>) query.getResultList();
+	public Iterable<Sol> findAll() {
+		return this.solRepository.findAll();
 	}
 
 	@Override
 	public Sol findByKey(int key) {
-		logger.info("Sol Service :: Finding Sol by key");
-		return entityManager.find(Sol.class, key);
+		return this.solRepository.findByKey(key);
+	}
+
+	@Override
+	public Optional<Sol> findById(long id) {
+		return this.solRepository.findById(id);
+	}
+
+	@Override
+	public void deleteSolByKey(int key) {
+		logger.info("SolRepository :: Deleting Sol :: Key = " + key);
+		this.solRepository.deleteByKey(key);
+	}
+
+	@Override
+	public void deleteSolById(long id) {
+		logger.info("SolRepository :: Deleting Sol :: ID = " + id);
+		this.solRepository.deleteById(id);
 	}
 
 	@Override
 	public boolean isSolExist(int key) {
-		Long count = (Long) entityManager.createQuery("select count(s) from Sol s where s.key = :key")
-				.setParameter("key", key).getSingleResult();
-		return ((count.equals(0L)) ? false : true);
+		return this.solRepository.existsByKey(key);
 	}
+
 }

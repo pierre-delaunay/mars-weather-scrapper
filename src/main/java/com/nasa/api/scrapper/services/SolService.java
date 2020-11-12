@@ -1,6 +1,6 @@
 package com.nasa.api.scrapper.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -16,19 +16,19 @@ import com.nasa.api.scrapper.model.Sol;
 public interface SolService {
 
 	/**
-	 * Create or update existing Sol.
+	 * Save Sol.
 	 * 
 	 * @param Sol
 	 * @return saved Sol
 	 */
-	public Sol createOrUpdate(Sol sol);
+	Sol save(Sol sol);
 
 	/**
 	 * Retrieve all Sols.
 	 * 
-	 * @return list of Sols
+	 * @return Iterable<Sol>
 	 */
-	public List<Sol> findAll();
+	Iterable<Sol> findAll();
 
 	/**
 	 * Retrieve Sol by its key.
@@ -36,7 +36,29 @@ public interface SolService {
 	 * @param key
 	 * @return Sol
 	 */
-	public Sol findByKey(int key);
+	Sol findByKey(int key);
+
+	/**
+	 * Retrieve Sol by its key.
+	 * 
+	 * @param key
+	 * @return Optional<Sol>
+	 */
+	Optional<Sol> findById(long id);
+
+	/**
+	 * Delete Sol by key.
+	 * 
+	 * @param key
+	 */
+	void deleteSolByKey(int key);
+
+	/**
+	 * Delete Sol by id.
+	 * 
+	 * @param id
+	 */
+	void deleteSolById(long id);
 
 	/**
 	 * Returns status over a existing Sol.
@@ -44,5 +66,5 @@ public interface SolService {
 	 * @param key
 	 * @return true if Sol already exists, false otherwise
 	 */
-	public boolean isSolExist(int key);
+	boolean isSolExist(int key);
 }

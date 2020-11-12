@@ -64,8 +64,7 @@ public class ScrapperApplication {
 
 		weather.getSols().forEach((k, v) -> {
 			logger.info("Scheduled Task :: Sol " + k);
-			this.solService.createOrUpdate(v);
+			this.solService.save(v);
 		});
 	}
-
 }

@@ -75,7 +75,6 @@ public class Sol {
 
 	public Sol(int key, Season season, String firstUTC, String lastUTC, Sensor atmosphericTemperature,
 			Sensor atmosphericPressure, Sensor horizontalWindSpeed) {
-		super();
 		this.key = key;
 		this.season = season;
 		this.firstUTC = firstUTC;
